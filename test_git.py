@@ -3,4 +3,6 @@
 # name: smz
 
 
-print 'Hello git ! --SMZ'
+if __name__ == '__main__':
+    print 'Hello git ! --SMZ'
+    print 'Yes'
