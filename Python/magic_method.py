@@ -16,6 +16,7 @@ class Sequence:
     # 实现取长度
     def __len__(self):
         return len(self.list)
+        #return 'long'
 
     # 实现赋值操作
     def __setitem__(self, key, value):
