@@ -52,8 +52,11 @@ class TestProperty:
 
 
 def show_func_name(func):  # 装饰器函数
-    print 'func_name:', func.__name__
-    return func
+    print 'func_name:', func.__name__  # 附加的功能
+    return func                # 原函数
+                               # 返回新函数,只是这里我没有写,省掉了,那么重点
+                               # 就要注意调用该装饰器的时机了,不能随便@,否则
+                               # 会在不想输出的时候得到意外的值
 
 @show_func_name
 def say_hi():    # 被装饰函数
