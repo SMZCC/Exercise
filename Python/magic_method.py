@@ -5,7 +5,7 @@
 __metaclass__ =type
 
 
-class Sequence:
+class Sequence:  # 序列魔法
     def __init__(self, list=None):
         self.list= list
 
