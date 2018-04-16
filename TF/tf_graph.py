@@ -53,8 +53,18 @@ def graph_use_two():
     # 结论,要想让某个张量在某个具体的图上,必须使用 with some_graph.as_default():
     # 默认的图随便你定不定义新图,总会存在,在with之外定义的张量全部被认为是该默认图的张量
 
+def graph_keys():
+
+    g = tf.Graph()
+
+    with g.as_default():
+        v_b = tf.Variable(0.)
+    print '-' * 100
+    print tf.GraphKeys.TRAINABLE_VARIABLES  # ?
+    print tf.GraphKeys.GLOBAL_VARIABLES     # ?
 
 
 if __name__ == '__main__':
     graph_use_one()
     graph_use_two()
+    graph_keys()

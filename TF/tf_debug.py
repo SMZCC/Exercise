@@ -6,7 +6,7 @@
 import numpy as np
 import tensorflow as tf
 from tensorflow.python import debug as tfdbg
-# 妹的,感觉很不习惯,以run为单位,每次列出所有的tensor的取值情况
+
 
 if __name__ == '__main__':
 

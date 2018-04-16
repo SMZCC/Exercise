@@ -25,7 +25,7 @@ if __name__ == '__main__':
 
     sess = tf.InteractiveSession()
 
-    g_2.as_default()
+    g_2.as_default()  # 这句有错
     with tf.variable_scope('g_2'):
         matrix_c = tf.get_variable(dtype=tf.float32, shape=(), name='matrix_c',
                                        initializer=tf.constant_initializer(8))

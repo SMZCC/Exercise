@@ -5,6 +5,7 @@
 
 import tensorflow as tf
 
+# identity就是一个类似于复制的操作,其他没什么,单纯的=并不是操作
 
 def example_one():
     x = tf.Variable(0.0)
