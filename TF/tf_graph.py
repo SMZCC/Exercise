@@ -58,7 +58,9 @@ def graph_keys():
     g = tf.Graph()
 
     with g.as_default():
-        v_b = tf.Variable(0.)
+        v_b = tf.Variable(2.)
+        loss = tf.nn.l2_loss(v_b)   #  单纯这样写是不会添加到tf.GraphKeys中的
+        tf.losses.add_loss(loss)    # 添加tf.GraphKeys.LOSSES集合中
 
     with tf.Session(graph=g) as sess:   # 这里需要传入graph,否则的话使用默认的graph,是空的GraphKeys
         init = tf.global_variables_initializer()
@@ -66,9 +68,12 @@ def graph_keys():
         print '-' * 50 + 'graph_keys' + '-' * 50
         print 'GraphKeys.TRAINABLE_VARIABLES:', tf.GraphKeys.TRAINABLE_VARIABLES  # 字符串常量,大写子母,基本是常量, trainable_variables
         print 'GraphKeys.GLOBAL_VARIABLES:', tf.GraphKeys.GLOBAL_VARIABLES     # 字符串常量, variables,要取得其对应的值,要使用tf.get_collection方法
+        print 'GraphKeys.LOSES:', tf.GraphKeys.LOSSES
         # 从上面看来tf.GraphKeys.TRAINABLE_VARIABLES以及tf.GraphKeys.GLOBLE_VARIABLES保存的应该就是一个集合的名字
         print 'get_collection(TRAINABLE_VARIABLES):', sess.run(tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES))
         print 'get_collection(GLOBLE_VARIABLES):', sess.run(tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES))
+        print 'get_collection(LOSES):', sess.run(tf.get_collection(tf.GraphKeys.LOSSES))
+        print 'get_total_loss:', sess.run(tf.losses.get_total_loss())
 
 
 if __name__ == '__main__':

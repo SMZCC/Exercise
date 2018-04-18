@@ -28,6 +28,8 @@ def main(input):
     # tf.split()
 
     tf.ones_like()
+    tf.losses.add_loss()
+    tf.GraphKeys.LOSSES
 
 
 if __name__ == '__main__':
