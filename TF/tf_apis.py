@@ -27,7 +27,7 @@ def main(input):
     # tf.device()
     # tf.split()
 
-
+    tf.ones_like()
 
 
 if __name__ == '__main__':
