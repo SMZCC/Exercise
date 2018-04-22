@@ -5,6 +5,7 @@
 
 import tensorflow as tf
 import tensorflow.contrib.slim as slim
+import tensorflow.contrib.layers as tf_contrib_layers
 
 def main(input):
     # layer_1 = slim.conv2d(input, 10, [5, 5], 2, scope='layer_1')  # 默认是nn.relu激活
@@ -29,7 +30,7 @@ def main(input):
 
     tf.ones_like()
     tf.losses.add_loss()
-    tf.GraphKeys.LOSSES
+    tf_contrib_layers.optimize_loss()
 
 
 if __name__ == '__main__':
