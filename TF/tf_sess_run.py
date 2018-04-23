@@ -25,3 +25,6 @@ if __name__ == '__main__':
             print 'i:', i, 'means:', mean_1, mean_2
             break
     #print sess.run([mean_op, mean])  # 3., 0.,因为即使这样写,也不一定是先执行mean_op
+
+
+    # sess.run()两个参数,一个是fetches,另一个是feed_dict
