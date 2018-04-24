@@ -14,8 +14,10 @@ def example_control_one():
     with tf.control_dependencies([y]):
         z = y
 
+    print y
     init = tf.global_variables_initializer()
-    sess = tf.InteractiveSession()
+    # sess = tf.InteractiveSession()
+    sess = tf.Session()  #  依旧不会实现依赖,没有操作
     sess.run(init)
     # sess = tfdbg.LocalCLIDebugWrapperSession(sess)
     print '-' * 50 + 'one' + '-' * 50
@@ -76,10 +78,31 @@ def example_control_four():
         print 'x:', sess.run(x), '|', 'y:', sess.run(y), '|', 'x_plus_one:', sess.run(x_plus_one)
 
 
+def example_contor_five():
+    """以上两个将y的值直接来源于x写错了,依旧是使用了返回张量的操作"""
+    x = tf.Variable(1., name='x')
+    y = tf.assign_add(x, 1., name='y')
+
+    with tf.control_dependencies([y]):
+        y = tf.identity(y)
+
+    # y与x应当是同一个地址的张量,并不是,操作对象不一样
+    print '-' * 50 + 'example_five' + '-' * 50
+    print 'tensor_x:', x, '|', 'tensor_y:', y
+
+    # with tf.Session() as sess:   # 能够实现数值一直递增
+    sess = tf.InteractiveSession()  # 能够实现数值一直递增
+    sess.run(tf.global_variables_initializer())
+    for i in range(5):
+        print 'x:', sess.run(x), '|', 'y:', sess.run(y)
+
+
+
 
 
 if __name__ == '__main__':
-    # example_control_one()
-    # example_control_two()
-    # example_control_three()
+    example_control_one()
+    example_control_two()
+    example_control_three()
     example_control_four()
+    example_contor_five()

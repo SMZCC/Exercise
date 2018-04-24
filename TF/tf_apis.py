@@ -31,6 +31,7 @@ def main(input):
     tf.ones_like()
     tf.losses.add_loss()
     tf_contrib_layers.optimize_loss()
+    tf.reduce_mean()
 
 
 if __name__ == '__main__':

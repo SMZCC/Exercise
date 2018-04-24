@@ -31,7 +31,7 @@ def example_two():
     operations = g.get_operations()
 
     # variable_a = tf.get_variable(name='var_a', dtype=tf.float32, shape=(), initializer=tf.constant_initializer(5))
-    # 该行所涉及的一系列的操作的名字均以var_a打头,我自己写的该行是一个VariableV2操作,其名字为：var_a
+    # 该行所涉及的一系列的操作的名字均以var_a打头,我自己写的该行是一个VariableV2类型的操作对象,其名字为：var_a
     # 由于还调用了其他的操作,那么那些操作也都以'var_a/'打头
     # 一共有4个操作
     # <tf.Operation 'var_a' type=VariableV2>

@@ -138,7 +138,7 @@ def metrics_mean_six():
             with tf.control_dependencies([update_op]):
                 mean_ = tf.identity(mean, name='identity_mean')   # 这里的这个identity 应该建立了依赖关系
                                                                   # 到了这里的这个张量的名字叫它 identity_mean
-            return mean_
+            return mean_                                          # 这里这个评论有误,通过其他的练习可知
 
     values = tf.convert_to_tensor([1, 2, 3, 4, 5])
 
@@ -157,9 +157,74 @@ def metrics_mean_six():
                                        # 第二次运行： 0.0, 3.0, 3.0, 4.0, 3.0
                                        # 第三次运行： 3.0, 3.0, 3.0, 3.0, 3.0
                                        # 第四次运行： Nan 3.0, 3.0, 3.0, 3.75
+def metrics_mean_seven():
+    def get_mean(values):
+        with tf.name_scope(name='get_mean'):  # 给操作命名前缀
+            mean, update_op = tf.metrics.mean(values, name='metrics_mean')  # 这里的操作的名字应该是 get_mean/metrics_mean打头
+
+            with tf.control_dependencies([update_op]):
+                mean = tf.identity(mean)
+
+            return mean
+
+    with tf.Session() as sess:                          # 使用这个得出的结果是正确的,不能使用tf.InteractiveSession()
+                                                        # iter 1:  total = 1+2+3+4+5 = 15
+                                                        #          count = 5   mean = 15 / 5 = 3
+                                                        # iter 2: total = 15 + 15 = 30
+                                                        #         count = 5+5=10  mean = 30 / 10 = 3
+
+        values = tf.convert_to_tensor([1, 2, 3, 4, 5])
+        mean_result = get_mean(values)
 
 
+        init_global = tf.global_variables_initializer()
+        init_local = tf.local_variables_initializer()
+        sess.run([init_global, init_local])
+        print '-' * 50 + 'seven' + '-' * 50
+        for i in range(5):
+            print sess.run(fetches=[mean_result])
 
+
+def metrics_mean_eight():
+    def get_mean(values):
+        with tf.name_scope(name='get_mean'):  # 给操作命名前缀
+            mean, update_op = tf.metrics.mean(values, name='metrics_mean')  # 这里的操作的名字应该是 get_mean/metrics_mean打头
+
+            with tf.control_dependencies([update_op]):
+                mean = tf.identity(mean)
+
+            return mean
+
+    with tf.Session() as sess:                          # 使用这个得出的结果是正确的,不能使用tf.InteractiveSession()
+                                                        # iter 1:  total = 1+2+3+4+5 = 15
+                                                        #          count = 5   mean = 15 / 5 = 3
+                                                        # iter 2: total = 15 + 15 = 30
+                                                        #         count = 5+5=10  mean = 30 / 10 = 3
+
+        values_1 = tf.convert_to_tensor([1, 2, 3, 4, 5], dtype=tf.float32)
+        values_2 = tf.convert_to_tensor([5, 5, 5, 5, 5], dtype=tf.float32)
+        mean_result_1 = get_mean(values_1)
+        mean_result_2 = get_mean(values_2)
+
+        g = tf.get_default_graph()
+        operations = g.get_operations()
+
+        init_global = tf.global_variables_initializer()
+        init_local = tf.local_variables_initializer()
+        sess.run([init_global, init_local])
+        print '-' * 50 + 'seven' + '-' * 50
+        # 查看operation的名字
+        for op in operations:
+            print op
+
+        mean_result_1, mean_result_2 = sess.run(fetches=[mean_result_1, mean_result_2])
+        print 'mean_result_1:', mean_result_1, '\n', 'mean_result_2:', mean_result_2
+                                                        # 如果理解不错的话
+                                                        # 应该是 3 和 4
+                                                        # 结果是 3 和 5
+                                                        # total和count并没有累加
+                                                        # 上面几个函数的理解有误,
+                                                        # 应该就是返回当前给定的数据流的加权平均值而已
 
 
 if __name__ == '__main__':
@@ -168,5 +233,6 @@ if __name__ == '__main__':
    # matrics_mean_three()
    # metrics_mean_four()
    # metrics_mean_five()
-   metrics_mean_six()
-
+   # metrics_mean_six()
+   # metrics_mean_seven()
+   metrics_mean_eight()
