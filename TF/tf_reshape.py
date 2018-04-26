@@ -32,6 +32,8 @@ def reshape_one():
                                [[[49, 50, 51], [52, 53, 54]],
                                 [[55, 56, 57], [58, 59, 60]]]])   # (5, 2, 2, 3)
         print 'matrix_one:\n', sess.run(fetches=[matrix_one], feed_dict={input:input_data})  # out: (5, 3, 4)
+        print 'input:\n', sess.run(input[0, :, :, 0], feed_dict={input: input_data})
+        print 'matrix_two:\n', sess.run(tf.reshape(matrix_one, (-1, 2, 2, 3)), feed_dict={input: input_data})
 
 def reshape_two():
     """不含transpose"""
@@ -59,8 +61,11 @@ def reshape_two():
                                [[[49, 50, 51], [52, 53, 54]],
                                 [[55, 56, 57], [58, 59, 60]]]])  # (5, 2, 2, 3)
         print 'matrix_one:\n', sess.run(fetches=[matrix_one], feed_dict={input: input_data})  # out: (5, 3, 4)
+        print 'input:\n', sess.run(input[0, :, :, 0], feed_dict={input: input_data})
+        print 'matrix_two:\n', sess.run(tf.reshape(matrix_one, (-1, 2, 2, 3)), feed_dict={input: input_data})
 
-
+# 要使得reshape前后的数据依旧是对应的话,需要使用transpose : transpose_op --> reshape_op
+# 如果要reshape回去的话,还得要按原路返回才行 : reshape_op --> transpose_op
 if __name__ == '__main__':
     reshape_one()
     reshape_two()
