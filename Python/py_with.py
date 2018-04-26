@@ -1,5 +1,4 @@
 # coding=utf-8
-<<<<<<< HEAD
 # date: 2018-4-1,16:16:24
 # name: smz
 
