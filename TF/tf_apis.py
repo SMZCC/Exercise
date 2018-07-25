@@ -13,7 +13,7 @@ def main(input):
     # tf.metrics.mean()
     # tf.identity()
     # with slim.arg_scope()
-    # tf.nn.conv2d()
+    tf.nn.conv2d()
     # tf.squeeze()
     # slim.utils.convert_collection_to_dict()
     # tf.add()
@@ -32,6 +32,7 @@ def main(input):
     tf.losses.add_loss()
     tf_contrib_layers.optimize_loss()
     tf.reduce_mean()
+    tf.nn.sigmoid_cross_entropy_with_logits()
 
 
 if __name__ == '__main__':

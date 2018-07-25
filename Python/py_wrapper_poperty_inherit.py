@@ -100,7 +100,16 @@ def lazy_sum_3(*args):
 
 
 
+def exercise_one():
 
+    def wrapper(func):
+        return func
+
+    @wrapper
+    def a_plus_b(a, b):
+        print a+b
+
+    plus = a_plus_b(1, 2)
 
 if __name__ == '__main__':
     # list_a = MyList([1, 2, 3])
@@ -115,19 +124,21 @@ if __name__ == '__main__':
     # objTestProperty = TestProperty()
     # objTestProperty.name = 'me'
     # print objTestProperty.name
-    say_hi() # 这里发现了一个奇怪的现象：我say_hi(), sum_1, sum_2
+    # say_hi() # 这里发现了一个奇怪的现象：我say_hi(), sum_1, sum_2
              # 都使用了show_func_name 函数,但是他们没有按照我调用的顺序进行
              # 使用显示函数名字,而是一次将所有的函数名都显示了
              # 通过在装饰器中打断点我发现,装饰器在函数调用之前,好像
              # 在语法检查阶段就直接运行了,那么如果我想直接让装饰器和
              # 函数同时运行,我恐怕要使用个闭包
-    print 'test'
-    sum_1 = lazy_sum_1(1, 2, 3, 4, 5)  # 我这里才开始调用lazy_sum_1,而
-    print sum_1()                      # 装饰器已经运行完了
-
-    sum_2 = lazy_sum_2()
-    print sum_2(6, 7, 8, 9, 10)
-
-    sum_3 = lazy_sum_3(1,2, 3, 4, 5, 6)  # 在将装饰器放入闭包中后,装饰器便和
-    print sum_3()                        # 函数的执行变成对了,没有在一开始
+    # print 'test'
+    # sum_1 = lazy_sum_1(1, 2, 3, 4, 5)  # 我这里才开始调用lazy_sum_1,而
+    # print sum_1()                      # 装饰器已经运行完了
+    #
+    # sum_2 = lazy_sum_2()
+    # print sum_2(6, 7, 8, 9, 10)
+    #
+    # sum_3 = lazy_sum_3(1,2, 3, 4, 5, 6)  # 在将装饰器放入闭包中后,装饰器便和
+    # print sum_3()                        # 函数的执行变成对了,没有在一开始
                                          # 的检查阶段直接运行出来
+
+    exercise_one()
