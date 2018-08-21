@@ -6,7 +6,9 @@ from __future__ import division
 
 import tensorflow as tf
 
-
+"""
+tf中的除法是tf.div虽然有tf.division这个api,但是该api并不是除法
+"""
 def example_div():
     matrix_a = tf.convert_to_tensor([[1, 2], [3, 4]], dtype=tf.float32)
     matrix_b = tf.convert_to_tensor([[1, 2], [3, 4]], dtype=tf.float32)
