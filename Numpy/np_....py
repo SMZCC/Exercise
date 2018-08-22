@@ -5,12 +5,23 @@
 import numpy as np
 
 """
-矩阵操作中三个点就是取原矩阵所有的值,并不限于是原矩阵哪个轴上的值,在哪个轴上使用了三个点(...),那么该轴上就是原矩阵的所有的值
+矩阵操作中三个点是表示取该轴所有元素,同：
 """
 
 def demo():
     matrix_a = np.array([[1, 2, 3], [4, 5, 6]])
     print 'matrix_a[...]:\n', matrix_a[...]
+    print 'matrix_a[0][...]:\n', matrix_a[0][...]
+
+    matrix_b = np.array([[[1, 2], [3, 4]], [[5, 6], [7, 8]]])  # (2, 2, 2)
+    print 'matrix_b[0, ...]:\n', matrix_b[0, ...]
+    print 'matrix_b[0, :, :]:\n', matrix_b[0, :, :]
+    print 'matrix_b[0, :]:\n', matrix_b[0, :]
+    print 'matrix_b[0]:\n', matrix_b[0]
+
+    print 'matrix_b[0, ..., 1]:\n', matrix_b[0, ..., 1]  # 第一个轴取索引为0的值,第二个轴全取,第三个轴取索引为1的值
+    print 'matrix_b[0, :, 1]:\n', matrix_b[0, :, 1]
+
 
 if __name__ == '__main__':
     demo()
