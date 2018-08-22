@@ -4,7 +4,9 @@
 
 
 import tensorflow as tf
-
+"""
+tf.matmul()是正常的矩阵乘法,tf.multiply()是哈达玛积
+"""
 
 def multi_one():
     g = tf.Graph()
@@ -18,7 +20,7 @@ def multi_one():
 
     print '-' * 50 + 'multi_one' + '-' * 50
     print 'out_matmul:\n', out_matmul
-    print 'out_multiply:', out_multiply
+    print 'out_multiply:\n', out_multiply
 
 if __name__ == '__main__':
     multi_one()

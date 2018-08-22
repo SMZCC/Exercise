@@ -35,7 +35,8 @@ def write_tfrecords_file():
             )
         )
 
-    tfrd_writer.write(example.SerializeToString())
+        tfrd_writer.write(example.SerializeToString())
+
     tfrd_writer.close()
 
 
