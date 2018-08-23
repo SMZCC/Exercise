@@ -7,8 +7,8 @@ import numpy as np
 from torch.autograd import Variable
 
 """
-Variable是封装了Tensor的类,主要是用于计算梯度用的
-x = Variable(Tensor, requires_grad=True)
+Variable是封装了Tensor的类,主要是用于计算梯度用的,其属性,requires_grad默认是False
+x = Variable(Tensor, requires_grad=False)  
 基本属性：
     x.data  Tensor,x的值,具有一定的形状,取值的话,需要通过索引
     x.grad  Variable, x对应的梯度值
@@ -17,3 +17,13 @@ x = Variable(Tensor, requires_grad=True)
     x.backward()  当x为loss的时候
     x.grad.data.zero_()  将梯度值重置为0
 """
+
+def demo_variable():
+    matrix_a = np.array([[1, 2], [3, 4]])
+    var_a = Variable(th.from_numpy(matrix_a))
+    print 'var_a:', var_a
+    print 'var_a.requires_grad:', var_a.requires_grad
+
+
+if __name__ == '__main__':
+    demo_variable()
