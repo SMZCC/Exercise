@@ -8,6 +8,7 @@ from torch.autograd import Variable
 from torch.autograd import Function
 from torch.autograd import gradcheck
 """
+from torch.autograd import Function
 通过继承Function类可以自定义能够自动微分的算子
 实现该算子的必要步骤：
     实现forward函数

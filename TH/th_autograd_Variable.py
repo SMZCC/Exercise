@@ -7,6 +7,7 @@ import numpy as np
 from torch.autograd import Variable
 
 """
+from torch.autograd import Variable
 Variable是封装了Tensor的类,主要是用于计算梯度用的,其属性,requires_grad默认是False
 x = Variable(Tensor, requires_grad=False)  
 基本属性：

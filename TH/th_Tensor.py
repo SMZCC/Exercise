@@ -15,7 +15,10 @@ tensor是torch的基础类
     .clone() 拷贝
     .pow()
     .sum()
-    .zero_() 在反向传播更新完梯度的时候,需要将对应的梯度值变为0,防止梯度累加
+    .zero_() 在反向传播计算梯度前,需要将各变量对应的梯度值变为0,防止梯度累加
+    .vew()   相当于reshape
+    .cuda()  将返回值放到gpu中,而tensor本身还是在cpu
+    .size()  相当于ndarray.shape
 基本数据类型有：
     torch.FloatTensor
     torch.IntTensor
@@ -28,9 +31,15 @@ def demo_tensor():
     tensor_b = th.from_numpy(np.array([[5, 6], [7, 8]]))
     tensor_c = tensor_a.mm(tensor_b)
     tensor_d = tensor_a * tensor_b   # 哈达玛积
+    tensor_e = tensor_a.view((1, 4))
+    tensor_f = tensor_a.cuda()
 
     print 'tensor_a.mm(tensor_b):\n', tensor_c
     print 'tensor_a * tensor_b:\n', tensor_d
+    print 'tensor_a.view((1, 4)):\n', tensor_e
+    print 'tensor_a.cuda():', tensor_f  # gpu
+    print 'tensor_a:', tensor_a        # cpu
+    print 'tensor_a.size:', tensor_a.size()
 
 if __name__ == '__main__':
     demo_tensor()
