@@ -15,19 +15,25 @@ tensor是torch的基础类
     .clone() 拷贝
     .pow()
     .sum()
-    .zero_() 在反向传播计算梯度前,需要将各变量对应的梯度值变为0,防止梯度累加
+    .mean(dim=1)  当前tensor必须是FloatTensor类型,计算dim轴内元素的均值,计算时是一个元素依次取一个值计算一个均值,直至所有的元素取尽
+                  如: [[1, 2], [3, 4]],dim=0, 0轴内有两个元素[1, 2], [3, 4], 依次取一个1+3=>2, 2+4=>3 ==>[2, 3]
+    .zero_() 将当前tensor内的所有元素全部变为0,在反向传播计算梯度前,需要将各变量对应的梯度值变为0,防止梯度累加
     .vew()   相当于reshape
     .cuda()  将返回值放到gpu中,而tensor本身还是在cpu
+    .cpu()
     .size()  相当于ndarray.shape
     .new()   返回新的tensor,类型同当前调用的tensor,若不传入数值的话,就没有维度,可以传入的类型有[1, 2], (1, 2), ndarray(), 单纯的数字
              前面三个类型传入是什么,返回就是什么,只有最后传入单纯的数字的时候,.new(2, 3)是返回shape为(2, 3)的随机矩阵
     .index_select(int dim, torch.LongTensor index)  在dim维度维度上进行取值,取值的索引为后面的参数,后面的参数必须是LongTensor类型的
     .long()  将当前的tensor数据类型改变为LongTensor类型
+    .numpy() 转为ndarray()类型
 基本数据类型有：
     torch.FloatTensor
     torch.IntTensor
+    ...
     以上每种类型都有对应的cuda类型
     torch.cuda.FloatTensor
+    ...
 对于显示效果说明：
     在控制台上显示的时候,一行是一个最基本的元素
 """
@@ -55,6 +61,11 @@ def demo_tensor():
     print 'tensor_a.new(np.array([1, 2])):', tensor_a.new(np.array([1, 2])) # 就是[1, 2]
     print 'tensor_a.new(2, 3):', tensor_a.new(2, 3)        # 随机(2, 3)的数,范围不清楚
     print 'tensor_a.index_select(0, th.from_numpy(np.array([1])).long()):', tensor_a.index_select(0, th.from_numpy(np.array([1])).long())
+    print 'tensor_a.numpy():\n', tensor_a.numpy()
+    print 'tensor_a:', tensor_a
+    print 'tensor_a.float().mean():', tensor_a.float().mean()
+    print 'tensor_a.float().mean(dim=1):', tensor_a.float().mean(dim=1)
+    print 'tensor_a.float().mean(dim=0):', tensor_a.float().mean(dim=0)
 
 
 if __name__ == '__main__':

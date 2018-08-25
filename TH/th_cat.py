@@ -16,5 +16,6 @@ def demo_cat():
     print 'cat((tensor_a, tensor_b), dim=1):', tensor_c     # [[1, 2, 5, 6], [3, 4, 7, 8]]
     print 'cat((tensor_a, tensor_b), dim=0):', tensor_d     # [[1, 2], [3, 4], [5, 6], [7, 8]]
 
+
 if __name__ == '__main__':
     demo_cat()

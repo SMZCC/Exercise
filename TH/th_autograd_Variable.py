@@ -25,6 +25,5 @@ def demo_variable():
     print 'var_a:', var_a
     print 'var_a.requires_grad:', var_a.requires_grad
 
-
 if __name__ == '__main__':
     demo_variable()
