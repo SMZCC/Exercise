@@ -7,6 +7,7 @@ import numpy as np
 
 """
 tensor是torch的基础类
+tensor = torch.from_numpy()
 基本方法有：
     .type() 返回值为设定的数据类型
     .mm(tensor_b) 与tensor_b进行正常的矩阵乘积,哈达玛积直接使用*即可,tensor_a * tensor_b

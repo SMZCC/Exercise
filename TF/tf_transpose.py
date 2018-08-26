@@ -14,5 +14,6 @@ def trans_matrix_one():
     print '-' * 50 + 'trans_matrix_one' + '-' * 50
     print 'matrix_one_T:\n', matrix_one_T
 
+
 if __name__ == '__main__':
     trans_matrix_one()
