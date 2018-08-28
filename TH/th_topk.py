@@ -21,3 +21,4 @@ def demo_topk():
 
 if __name__ == '__main__':
     demo_topk()
+    th.nn.Upsample

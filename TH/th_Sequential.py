@@ -26,21 +26,21 @@ class model(th.nn.Module):
         self.layers = th.nn.Sequential(
             # layers 这个Sequential的_modules中包含两个<Module> 一个是'conv1',另一个是'conv2'
             OrderedDict([
-            ('conv1', th.nn.Sequential(th.nn.Conv2d(3, 96, 2), th.nn.Dropout())),
+            ('conv1', th.nn.Sequential(th.nn.Conv2d(3, 64, 3), th.nn.Dropout())),
                 # conv1 这个<Modules>的_modules中包含Conv2d和Dropout两个<Module>,名字分别为索引'0'和'1'
-            ('conv2', th.nn.Sequential(th.nn.Conv2d(96, 128, 2), th.nn.Dropout()))
+            ('conv2', th.nn.Sequential(th.nn.Conv2d(64, 128, 3), th.nn.Dropout()))
         ]))  # 结构: layers->两个Sequential->各自两个网络层
     def forward(self, input):
         out = self.layers(input)
-# 以下是调试中时model_one对象中所包含的对象,括号中是其对应的名字,之所以有layers那是因为该model_one中有个属性名为layers的属性
+# 以下是调试中时model_one对象中的值,括号中是其对应的名字,之所以有layers那是因为该model_one中有个属性名为layers的属性
 # model (
 #   (layers): Sequential (
 #     (conv1): Sequential (
-#       (0): Conv2d(3, 96, kernel_size=(2, 2), stride=(1, 1))
+#       (0): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1))
 #       (1): Dropout (p = 0.5)
 #     )
 #     (conv2): Sequential (
-#       (0): Conv2d(96, 128, kernel_size=(2, 2), stride=(1, 1))
+#       (0): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1))
 #       (1): Dropout (p = 0.5)
 #     )
 #   )

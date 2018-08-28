@@ -6,7 +6,15 @@ import numpy as np
 import torch as th
 """
 result = torch.stack((tensor_a, tensor_b), dim=0)
-将tensor中轴为dim的对应元素堆叠起来成为一个新的元素,自然最外面会多一个轴用来包裹堆叠的tensor
+增加一个dim轴,使得该轴内的元素合并起来
+参数:
+    def stack(sequence, dim=0, out=None):
+    Concatenates sequence of tensors along a new dimension.
+    All tensors need to be of the same size.
+    Arguments:
+        sequence (Sequence): sequence of tensors to concatenate.
+        dim (int): dimension to insert(用于插入的轴). Has to be between 0 and the number
+            of dimensions of concatenated tensors (inclusive).
 """
 def demo_stack():
     tensor_a = th.from_numpy(np.array([[1, 2], [3, 4]]))

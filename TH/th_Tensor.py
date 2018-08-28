@@ -8,6 +8,7 @@ import numpy as np
 """
 tensor是torch的基础类
 tensor = torch.from_numpy()
+tensor = torch.Tensor(3, 5)
 基本方法有：
     .type() 返回值为设定的数据类型
     .mm(tensor_b) 与tensor_b进行正常的矩阵乘积,哈达玛积直接使用*即可,tensor_a * tensor_b
@@ -23,7 +24,7 @@ tensor = torch.from_numpy()
     .cuda()  将返回值放到gpu中,而tensor本身还是在cpu
     .cpu()
     .size()  相当于ndarray.shape
-    .new()   返回新的tensor,类型同当前调用的tensor,若不传入数值的话,就没有维度,可以传入的类型有[1, 2], (1, 2), ndarray(), 单纯的数字
+    .new()   返回新的tensor,类型同当前调用的tensor,若不传入数值的话,就没有维度,可以传入的类型有[1, 2], (1, 2), ndarray()以及单纯的数字
              前面三个类型传入是什么,返回就是什么,只有最后传入单纯的数字的时候,.new(2, 3)是返回shape为(2, 3)的随机矩阵
     .index_select(int dim, torch.LongTensor index)  在dim维度维度上进行取值,取值的索引为后面的参数,后面的参数必须是LongTensor类型的
     .long()  将当前的tensor数据类型改变为LongTensor类型
@@ -68,6 +69,21 @@ def demo_tensor():
     print 'tensor_a.float().mean(dim=1):', tensor_a.float().mean(dim=1)
     print 'tensor_a.float().mean(dim=0):', tensor_a.float().mean(dim=0)
 
+    print 'tensor_i = th.Tensor(3, 5):', th.Tensor(3, 5)   # 未初始化的tensor
+
+def tensor_add_elments():
+    """
+    给张量添加元素,该方法比较蛮力
+    :return:
+    """
+    tensor_a = th.from_numpy(np.array([[1, 2], [3, 4]]))
+    tensor_a_shape = tensor_a.shape
+    tensor_b = tensor_a.new(3, tensor_a_shape[1])
+    tensor_b[:2] = tensor_a[:2]
+    tensor_b[2] = tensor_a[1]
+    print 'check ...'
+
 
 if __name__ == '__main__':
     demo_tensor()
+    # tensor_add_elments()
