@@ -20,6 +20,9 @@ class SomeClass(torch.nn.Module):
     .name_children()    返回当前<Module>的 名字,孩子 对, 所有, 名字的连接都是用的.,如:layers.conv1.0.weight
     .modules()          返回当前<Module>的所有<Module>, 包含当前<Module>,当前<Module>的名字为变量名,实际是调用.named_module()
     .named_modules()    返回当前<Module>的所有 name, <Module> 对
+                          搜索方式是从最外层的<Module>开始,子<Module>的名字的命名方式是从子<Module>前缀开始(同named_parameters(),
+                          不同的是named_modules()会包含最外层的<Module>,即当前<Module>,但是无论当前<Module>是否有前缀,该当前<Module>的名字永远是'',
+                          且当前<Module>的前缀不会添加到子<Module>的前缀之上)
                           若网络结构为:
                             self.layers = th.nn.Sequential(
                             # layers 这个Sequential的_modules中包含两个<Module> 一个是'conv1',另一个是'conv2'
@@ -55,7 +58,31 @@ class SomeClass(torch.nn.Module):
     .zero_grad()        将当前<Module>的所有变量的梯度全部设置为0,在进行梯度计算前需要执行,当前优化器也有类似的功能
     .cuda()             将当前<Module>放到gpu中
     .cpu()              将当前<Module>放到cpu中,在保存模型的时候会用到,因为我们在加载已经训练的模型的时候,往往多是在cpu中加载的
-    
+    .parameters()       获得当前<Module>的参数,会遍历每个子<Module>,但不会遍历父<Module>
+    .named_parameters() 获得当前<Module>的params 以及其对应的name,name的命名方法是从调用.named_parameters()的<Module>
+                          对象的子集<Module>开始一级一级地添加名字前缀,不包括当前<Module>的前缀,如：
+                          layers = nn.Sequential(OrderdDict([
+                          ('conv1', nn.Sequential(nn.Conv2d(), nn.Dropout())), 
+                          ('conv2', nn.Sequential(nn.Conv2d(), nn.Dropout())))])
+                          
+                          =>layers.named_parameters(): layers的子集<Module>的名字为conv1,conv2,故而,layers调用.named_params为:
+                                model_one.layers.named_parameters():
+                                    conv1.0.weight     # 没有前缀layers
+                                    conv1.0.bias
+                                    conv2.0.weight
+                                    conv2.0.bias
+                            若是最外层的model_one<Module>调用的话,就是从model_one的下一级<Module>名字开始,即,layers开始:
+                                model_one.named_parameters():
+                                    layers.conv1.0.weight   # 没有前缀''
+                                    layers.conv1.0.bias
+                                    layers.conv2.0.weight
+                                    layers.conv2.0.bias
+                            同理,若是获取'conv1'<Module>对应的named_parameters(),就是从nn.Conv2d(),nn.Dropout()开始,
+                            由于这两个module没有使用字典来指定名字(前缀),故而使用序数来代替:
+                                model_one.layers[0].named_parameters():
+                                    0.weight
+                                    0.bias
+                                注: nn.Dropout()没有params                        
     
     # 以下方法基本是框架本身调用,用户调用频率不高
     .register_parameters() 将当前<Module>的变量都保存到_parameters中
@@ -117,20 +144,68 @@ def check_parameters(model_one):
     for module_name, module in model_one.layers.named_modules():
         if module_name.startswith('conv1'):
             print module_name, module.named_parameters()
+            for param_name, param in module.named_parameters():
+                print param_name
 
     print '*' * 50
+    print 'model_one.named_parameters():'
+    for param_name, param in model_one.named_parameters():
+        print param_name
 
-    print model_one.layers[0].named_parameters()
+    print '*' * 50
+    print 'model_one.layers.named_parameters():'
+    for param_name, param in model_one.layers.named_parameters():
+        print param_name
+
+    print '*' * 50
+    print 'model_one.layers[0].named_parameters():'
+    print [name for name, param in model_one.layers[0].named_parameters()]  # 只有conv2d的params
+
+
+def check_modules(model_one):
+    print 'model_one.named_modules():'
+    for module_name, module in model_one.named_modules():
+        if module_name == '':
+            print "''"
+        else:
+            print module_name
+    print '*' * 100
+
+    print 'model_one.layers.named_modules():'
+    for module_name, module in model_one.layers.named_modules():
+        if module_name == '':
+            print "''"
+        else:
+            print module_name
+    print '*' * 100
+
+    print 'model_one.layers[0].named_modules():'
+    for module_name, module in model_one.layers[0].named_modules():
+        if module_name == '':
+            print "''"
+        else:
+            print module_name
+
+
+
+
 
 
 if __name__ == '__main__':
     model_one = model()
-    for name, module in model_one.named_modules():
-        print name, module
-        print '*' * 100
-    # check_parameters(model_one)
     # show_methods(model_one)
 
+    # for name, module in model_one.named_modules():
+    #     print name, module
+    #     print '*' * 100
+    # check_parameters(model_one)
+    check_modules(model_one)
+
+# 以下是:
+    # for name, module in model_one.named_modules():
+    #     print name, module
+    #     print '*' * 100
+# 的结果
 # model (
 #   (layers): Sequential (
 #     (conv1): Sequential (
