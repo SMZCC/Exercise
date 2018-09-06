@@ -19,6 +19,7 @@ model = torch.nn.Sequential()
     forward(input)          实际上是实现的__call__(input) 
 注：
     以上方法全部不需要主动调用   
+    __getitem__(self, idx)方法不可通过关键字来索引,如下面的'conv1',只能通过索引号来索引Sequential内的元素
 """
 class model(th.nn.Module):
     def __init__(self):
@@ -45,6 +46,7 @@ class model(th.nn.Module):
 #     )
 #   )
 # )
+
 
 if __name__ == '__main__':
     model_one = model()

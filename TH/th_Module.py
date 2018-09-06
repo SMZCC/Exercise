@@ -20,6 +20,30 @@ class SomeClass(torch.nn.Module):
     .name_children()    返回当前<Module>的 名字,孩子 对, 所有, 名字的连接都是用的.,如:layers.conv1.0.weight
     .modules()          返回当前<Module>的所有<Module>, 包含当前<Module>,当前<Module>的名字为变量名,实际是调用.named_module()
     .named_modules()    返回当前<Module>的所有 name, <Module> 对
+                          若网络结构为:
+                            self.layers = th.nn.Sequential(
+                            # layers 这个Sequential的_modules中包含两个<Module> 一个是'conv1',另一个是'conv2'
+                            OrderedDict([
+                              ('conv1', th.nn.Sequential(th.nn.Conv2d(3, 96, 2), th.nn.Dropout())),
+                                # conv1 这个<Modules>的_modules中包含Conv2d和Dropout两个<Module>,名字分别为索引'0'和'1'
+                              ('conv2', th.nn.Sequential(th.nn.Conv2d(96, 128, 2), th.nn.Dropout()))
+                            ]))  # 结构: layers->两个Sequential->各自两个网络层
+                            
+                            layers--|'' Sequential  # 这里这个''是赋值给layers的Sequential的名字
+                                     --|'conv1'  Sequential
+                                        --|'conv1.0' Conv2d
+                                        --|'conv1.1' Dropout
+                                     --|'conv2'  Sequential
+                                        --|'conv2.0' Conv2d
+                                        --|'conv2.1' Dropout
+                            => layers.named_modules的结果为:
+                            ''      Sequential  # 这是layers对应的最外层的Sequential
+                            'conv1' Sequential
+                            'conv1.0' Conv2d
+                            'conv1.1' Dropout
+                            'conv2' Sequential
+                            'conv2.0' Conv2d
+                            'conv2.1' Dropout
     .add_module()       将当前<Module>的<Module>都保存到_modules中(如出现在torch.nn.Sequential的构造函数中的<Module>),
                         或者将某个<Module>添加到当前的<Module>中,
                             如：<Module> = nn.Sequential()是个空的<Module>,另外实现了<Module>_new = torch.nn.ReLU(),
@@ -89,11 +113,23 @@ def show_methods(model):
     print 'model_one._modules:', model._modules
 
 
+def check_parameters(model_one):
+    for module_name, module in model_one.layers.named_modules():
+        if module_name.startswith('conv1'):
+            print module_name, module.named_parameters()
+
+    print '*' * 50
+
+    print model_one.layers[0].named_parameters()
+
+
 if __name__ == '__main__':
     model_one = model()
     for name, module in model_one.named_modules():
         print name, module
         print '*' * 100
+    # check_parameters(model_one)
+    # show_methods(model_one)
 
 # model (
 #   (layers): Sequential (
