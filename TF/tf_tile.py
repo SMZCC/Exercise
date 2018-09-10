@@ -6,6 +6,10 @@
 import tensorflow as tf
 
 import numpy as np
+"""
+tensor = tf.tile(tensor_b, [axis0, axis1, ...])
+将tensor_b的各个轴内所有元素,按整体重复axis0, axis1遍
+"""
 
 
 def test_tile():

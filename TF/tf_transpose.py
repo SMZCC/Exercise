@@ -6,6 +6,7 @@ import tensorflow as tf
 
 """使用transpose转置矩阵"""
 
+
 def trans_matrix_one():
     matrix_one = tf.convert_to_tensor([[1, 2], [3, 4]])
     with tf.Session() as sess:

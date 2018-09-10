@@ -26,7 +26,9 @@ if __name__ == '__main__':
     print '###############实例化之后######################'
 
     p = Person()
+    print 'p:', p
     print 'self.class_:', p.class_
     print 'self.name_:', p.name_
+
 
 

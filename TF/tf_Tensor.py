@@ -7,6 +7,7 @@ import tensorflow as tf
 tensorflow中最基本的类
 tensor = tf.convert_to_tensor(value, dtype, name)  
 tensor = tf.constant(value, dtype, name)
+tenosr = tf.Tensor() 一般用户不直接调用,其有三个必须要赋值的关键字参数op, value_index, dtype,因为tf的tensor都是与操作绑定的
 参数:
   value  可以是ndarray,也可以不是
   dtype  tf.int32, tf.float32 ...
@@ -24,8 +25,11 @@ tensor = tf.constant(value, dtype, name)
             op指的是某个操作
     3.上面tf.convert_to_tensor() 实际是调用的tf.constant()
     4.诸如tf.constant()这种操作不需要输入tensor却能向其他的操作提供tensor的操作被称作 源op
+    5.这些操作返回的是<Tensor>类,而不是<Operation>,有待进一步观察
     
 """
+
+
 def demo_tensor():
 
     tensor_a = tf.convert_to_tensor(12)
@@ -50,6 +54,7 @@ def demo_tensor():
                                           # 上面的tensor_a 是Const操作类的输出
         print 'new tensor_a.eval():', tensor_a.eval()
         print 'tensor_a.graph:', tensor_a.graph
+
 
 
 if __name__ == '__main__':

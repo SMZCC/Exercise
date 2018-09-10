@@ -8,6 +8,7 @@ import tensorflow as tf
 tf.matmul()是正常的矩阵乘法,tf.multiply()是哈达玛积
 """
 
+
 def multi_one():
     g = tf.Graph()
     with g.as_default():
