@@ -25,6 +25,7 @@ tensor = torch.Tensor(3, 5)
     .vew_as()相当于reshape,与上面的.view()的区别是.view()是直接传入shape,但是.view_as()是传入一个tensor,然后其自动获取shape,再reshape
     .cuda()  将返回值放到gpu中,而tensor本身还是在cpu
     .cpu()
+    .fill_(value)  使用指定值value来填充当前<Tensor>,会替换原有的值,而且仅能传入一个参数,没有.fill(value)方法
     .size()  相当于ndarray.shape
     .permute(dim1, dim2, dim3, ...) 将当前<Tensor>的轴重新排序
     .transpose(input, dim1, dim2, out) 也是交换轴,然而只能交换两个轴,不如.permute可以随便几个轴
@@ -94,6 +95,7 @@ def demo_tensor():
     tensor_h = tensor_a.new([[1, 2]])
     tensor_i = th.Tensor([[[1], [2], [3]], [[4], [5], [6]]])  # (2, 3, 1),th.Tensor中的Tensor是torch.FloatTensor的别名
 
+
     print 'tensor_a.mm(tensor_b):\n', tensor_c
     print 'tensor_a * tensor_b:\n', tensor_d
     print 'tensor_a.view((1, 4)):\n', tensor_e
@@ -140,8 +142,17 @@ def tensor_add_elments():
     print 'check ...'
 
 
+def demo_fill_():
+    tensor = th.ones(3, 3)
+    print 'tensor:', tensor
+    # tensor_new = tensor.fill(2)
+    tensor.fill_(2)
+    print 'tensor.fill_(2):', tensor
+
+
 if __name__ == '__main__':
-    demo_tensor()
+    # demo_tensor()
     # tensor_add_elments()
+    demo_fill_()
 
 
