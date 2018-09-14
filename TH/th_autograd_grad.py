@@ -154,9 +154,9 @@ def demo_six():
 
 
 if __name__ == '__main__':
-    # demo_one()
+    demo_one()
     # demo_two()   # 不可行,不必运行了,结论查看demo_two()
     # demo_three()
     # demo_four()
     # demo_five()
-    demo_six()
+    # demo_six()

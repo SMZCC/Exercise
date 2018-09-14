@@ -4,6 +4,7 @@
 
 import torch as th
 import numpy as np
+from torch.autograd import Variable
 
 """
 tensor是torch的基础类
@@ -81,7 +82,10 @@ tensor = torch.Tensor(3, 5)
             否则的话,就是一个数,常见的就是matrix_a = [0, 1, 2]  一共只有一个轴,matrix_a[1],在0轴上取索引为1的元素,由于0轴后面没有轴了,所以就
             只有一个数,没有了轴;matrix_b = [[1, 2], [3, 4]], 一共有两个轴,matrix_b[1],只在第一个轴上取了值,所以第一个轴的元素都是以第二个轴
             为单位的元素,每个单位的元素的长度是第二个轴的长度
-    
+          4.<Tensor>的取值若是对考虑单元内的元素进行取值,那么得到的便不再是<Tensor>了,例如: tensor_a = th.Tensor([1]).type(th.FloatTensor)
+             tensor_a.[0] 得到的是1.0,纯粹的float类型,一个python类型
+          5.对于某个轴来说,如果不是取一个元素的话,那么该轴说明还是要存在的,因为该轴的作用就是要包含这些元素,如果是取某个元素的话,该轴就
+            没有必要存在了,因为我要取的是该轴的子对象,而非与该轴有关的东西
 """
 
 def demo_tensor():
@@ -150,9 +154,29 @@ def demo_fill_():
     print 'tensor.fill_(2):', tensor
 
 
+def demo_fetchitem():
+    tensor_a = th.Tensor([1]).type(th.FloatTensor)
+    print 'tensor_a:', tensor_a                     # <Tensor>
+    print 'tensor_a[0]:', tensor_a[0]               # 纯粹的float类型,原始的python类型,非<Tensor>
+    print 'type(tensor_a[0]):', type(tensor_a[0])   # 纯粹的float类型,原始的python类型,非<Tensor>
+
+    tensor_b = th.Tensor([[1, 2], [3, 4]]).type(th.FloatTensor)
+    print 'tensor_b[0, 1]:', tensor_b[0, 1]         # 纯粹的float类型,原始的python类型,非<Tensor>
+    print 'tensor_b[0]:', tensor_b[0]               # <Tensor> [1, 2]
+
+    # 做个测试,将tensor_a = th.Tensor([1]).type(th.FloatTensor)[0]使用Variable构建一个<Variable>
+    # 报错:RuntimeError: Variable data has to be a tensor, but got float,
+    # 那么从<Tensor>中取值构建<Variable>时候就有可能出现莫名其妙的BUG了,毕竟一个变化的结果,也有可能如这里的tensor_a一样呀
+    # 措施：构建<Variable>的时候,避免使用这种从<Tensor>中取值的方式,否则必须要检查轴的个数,不足的时候要加轴
+
+    # var_a = Variable(tensor_a[0])
+    # print 'var_a:', var_a
+
+
 if __name__ == '__main__':
     # demo_tensor()
     # tensor_add_elments()
-    demo_fill_()
+    # demo_fill_()
+    demo_fetchitem()
 
 

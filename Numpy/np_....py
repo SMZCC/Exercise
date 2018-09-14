@@ -8,8 +8,10 @@ import numpy as np
 矩阵操作中三个点是表示取该轴所有元素,同：
 """
 
+
 def demo():
     matrix_a = np.array([[1, 2, 3], [4, 5, 6]])
+    print 'matrix_a[:]:\n', matrix_a[:]
     print 'matrix_a[...]:\n', matrix_a[...]
     print 'matrix_a[0][...]:\n', matrix_a[0][...]
 

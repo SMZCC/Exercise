@@ -19,6 +19,7 @@ x = Variable(Tensor, requires_grad=False)
     x.grad.data.zero_()  将梯度值重置为0
 """
 
+
 def demo_variable():
     matrix_a = np.array([[1, 2], [3, 4]])
     var_a = Variable(th.from_numpy(matrix_a))
