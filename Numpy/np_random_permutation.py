@@ -12,6 +12,7 @@ np.random.permutation(int/ndarray)
     其打乱的也就是第一个轴内(索引为0)的元素 => [[1, 2], [3, 4]]最多会变为: [[3, 4], [1, 2]],但不会变为: [[1, 3], [2, 4]]等等
 """
 
+
 def demo_permutation():
     demo_one = np.random.permutation(5)
     demo_two = np.random.permutation(np.array([[1, 2], [3, 4]]))
@@ -20,4 +21,4 @@ def demo_permutation():
 
 
 if __name__ == '__main__':
-    demo_random_permutation()
+    demo_permutation()
