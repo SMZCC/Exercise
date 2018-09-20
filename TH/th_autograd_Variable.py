@@ -17,6 +17,11 @@ x = Variable(Tensor, requires_grad=False)
     基本同Tensor
     x.backward()  当x为loss的时候
     x.grad.data.zero_()  将梯度值重置为0
+    
+注意:
+    1. 没有.copy_()方法,所以一个<Variable>调用.copy_()的话是会报错的,这个错误极可能隐秘地发生在恢复模型的时候
+       由于模型中的参数都是<Parameter>的,而<Parameter>都是继承<Variable>的,所以若是使用<Parameter>.copy_()来
+       恢复权值的话,是会报错的
 """
 
 

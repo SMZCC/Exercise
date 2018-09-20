@@ -17,6 +17,7 @@ tensor = torch.Tensor(3, 5)
     .clamp(min, max) 将tensor的值限定在[min, max],可以只有一个参数[min, +inf)或(-inf, max]
     .t()  转置
     .clone() 拷贝
+    .copy_() 覆盖当前<Tensor>中的值,<Variable>没有该方法
     .pow()  只有FloatTensor才有该方法,LongTensor没有该方法,而且,<LongTensor>也没有.square()方法
     .sum()
     .mean(dim=1)  当前tensor必须是FloatTensor类型,计算dim轴内元素的均值,计算时是一个元素依次取一个值计算一个均值,直至所有的元素取尽
@@ -173,10 +174,21 @@ def demo_fetchitem():
     # print 'var_a:', var_a
 
 
+def demo_copy_():
+    var_a = Variable(th.Tensor([1, 2]))
+    tensor_a = th.FloatTensor([3, 4])
+    # var_a.copy_(tensor_a)  # variable类没有copy_方法
+    tensor_a.copy_(th.FloatTensor([5, 6]))
+
+    print 'var_a.copy_(tensor_a):', var_a
+    print 'tensor_a.copy_(th.FloatTensor([5, 6]):', tensor_a
+
+
 if __name__ == '__main__':
     # demo_tensor()
     # tensor_add_elments()
     # demo_fill_()
-    demo_fetchitem()
+    # demo_fetchitem()
+    demo_copy_()
 
 
