@@ -23,6 +23,7 @@ class Parameter(Variable):
         
 注意:
     1.该类没有.copy_()方法,因为其是继承的<Variable>,而<Variable>没有.copy_()方法
+    2.可以使用赋值符号=来改变值
 
 """
 
