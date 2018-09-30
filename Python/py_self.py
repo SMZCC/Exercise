@@ -45,3 +45,4 @@ if __name__ == '__main__':
     print 'p3.age:', p3.age     # 10
     print 'p4.name:', p4.name   # smz
     print 'p4.age:', p4.age     # 10
+

@@ -71,8 +71,16 @@ class Node(object):
         self.next_ = next_
 
 
+
 class TwoWayNode(Node):
     """双链表节点:数据域+两个节点引用域, 另外在生成链表的时候,会额外使用一个指针域保存尾节点"""
     def __init__(self, data, previous=None, next_=None):
         super(TwoWayNode, self).__init__(data, next_)
         self.previous = previous
+
+
+class BSTNode(object):
+    def __init__(self, data, left=None, right=None):
+        self.data = data
+        self.left = left
+        self.right = right
