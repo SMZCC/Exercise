@@ -5,6 +5,8 @@
  2. char:      1
  3. float:     4
  4. double:    8
+注意：
+    1. 可以直接使用sizeof(类型名)获得该类型数据的大小
  */
 
 int main(){
@@ -13,7 +15,7 @@ int main(){
     float c = 1.2;    
     double d = 2.4;
     
-    printf("The size of int is %ld kb\n", sizeof(a));
+    printf("The size of int is %ld kb,sizeof(int):%ld\n",sizeof(a),sizeof(int));
     printf("The size of char is %ld kb\n", sizeof(b));
     printf("The size of float is %ld kb\n", sizeof(c));
     printf("The size of double is %ld kb\n", sizeof(d));
