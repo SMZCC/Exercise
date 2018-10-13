@@ -10,7 +10,9 @@ pickle.dump(obj, fp, protocol)
  protocol: 写入协议,若想py2和py3能同时打开同一个pkl文件,可令protocol=2
  
 注：
-    只有指定了protocol的dump才会保存成未知的pkl文件,否则都像是文本文件的样子
+    1.只有指定了protocol的dump才会保存成未知的pkl文件,否则都像是文本文件的样子
+    2.pickle序列化的什么对象,读取出来的就是什么对象
+    3.读写文件的时候,使用二进制(wb, rb)的方式可以省去很多关于编码的麻烦
 """
 
 
