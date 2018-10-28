@@ -5,7 +5,7 @@
 import numpy as np
 """
 np.unique(ar, return_index=False, return_inverse=False, return_counts=False, axis=None)
-去除ndarray中的重复元素,并升序排序输出(默认)
+去除ndarray中的重复元素,并升序排序输出(默认)结果
 注意:
     unique array: 没有重复元素的矩阵
     unique item : 构成unique array的元素
